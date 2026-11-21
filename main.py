@@ -39,6 +39,10 @@ def resolve_output_dir() -> str:
 
 
 def main() -> None:
+    # Guard the gate before writing: 1-280 chars, not only whitespace.
+    chars = len(POEM)
+    if not 1 <= chars <= 280 or not POEM.strip():
+        raise ValueError(f"poem is {chars} chars; must be 1-280, non-blank")
     output_dir = resolve_output_dir()
     path = os.path.join(output_dir, "entry.txt")
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
